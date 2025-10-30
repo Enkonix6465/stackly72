@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Prevent scrollbar layout shift - Always reserve space for scrollbar */
+  html {
+    overflow-y: scroll !important;
+    min-height: 100vh;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+}
+
+/* Custom animations for background blobs */
+@layer utilities {
+  @keyframes blob {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(20px, -50px) scale(1.1);
+    }
+    50% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+    75% {
+      transform: translate(50px, 50px) scale(1.05);
+    }
+  }
+
+  .animate-blob {
+    animation: blob 9s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 6s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 5s;
+  }
+}
+
+/* RTL Support */
+html[dir="rtl"] {
+  direction: rtl;
+}
+
+html[dir="rtl"] body {
+  text-align: right;
+}
+
+/* RTL Tailwind utilities */
+.rtl .ml-4 {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+.rtl .mr-4 {
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+.rtl .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.rtl .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+.rtl .ml-3 {
+  margin-left: 0;
+  margin-right: 0.75rem;
+}
+
+.rtl .mr-3 {
+  margin-right: 0;
+  margin-left: 0.75rem;
+}
+
+.rtl .pl-4 {
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+.rtl .pr-4 {
+  padding-right: 0;
+  padding-left: 1rem;
+}
+
+.rtl .pl-3 {
+  padding-left: 0;
+  padding-right: 0.75rem;
+}
+
+.rtl .pr-3 {
+  padding-right: 0;
+  padding-left: 0.75rem;
+}
+
+.rtl .text-left {
+  text-align: right;
+}
+
+.rtl .text-right {
+  text-align: left;
+}
+
+/* Flexbox RTL support for content areas only */
+.rtl .content-rtl .flex-row {
+  flex-direction: row-reverse;
+}
+
+/* Keep navigation spacing consistent regardless of language */
+nav .rtl .space-x-4 > :not([hidden]) ~ :not([hidden]),
+nav .rtl .space-x-8 > :not([hidden]) ~ :not([hidden]),
+nav .rtl .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0 !important;
+}
+
+/* Content areas can use RTL spacing */
+.rtl .content-rtl .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+.rtl .content-rtl .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+.rtl .content-rtl .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+/* Navigation RTL support - Keep header layout consistent */
+.rtl nav .justify-between {
+  flex-direction: row; /* Keep navigation in LTR layout */
+}
+
+/* Content areas can still use RTL */
+.rtl .content-rtl .justify-between {
+  flex-direction: row-reverse;
+}
+
+/* Dropdown positioning for RTL */
+.rtl .absolute.left-0 {
+  left: auto;
+  right: 0;
+}
+
+.rtl .absolute.right-0 {
+  right: auto;
+  left: 0;
+}
+
+/* Language selector positioning for content areas */
+.rtl .content-rtl .group:hover .absolute.right-0 {
+  right: auto;
+  left: 0;
+}
+
+/* Navigation stability class - prevents RTL affecting header layout */
+.nav-stable {
+  direction: ltr !important;
+  will-change: auto !important;
+}
+
+.nav-stable * {
+  direction: ltr !important;
+}
+
+.nav-stable .flex {
+  flex-direction: row !important;
+}
+
+/* Prevent navigation items from shifting on language change */
+.nav-stable nav > div > div,
+.nav-stable > div > div {
+  min-height: 64px !important;
+}
+
+/* Keep all navigation text and buttons stable */
+.nav-stable a,
+.nav-stable button,
+.nav-stable span,
+.nav-stable div {
+  white-space: nowrap !important;
+  direction: ltr !important;
+}
+
+/* Force consistent spacing regardless of language */
+.nav-stable .space-x-3 > :not([hidden]) ~ :not([hidden]),
+.nav-stable .space-x-4 > :not([hidden]) ~ :not([hidden]),
+.nav-stable .space-x-6 > :not([hidden]) ~ :not([hidden]),
+.nav-stable .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Ensure buttons and action items stay on the right */
+.nav-stable .justify-between {
+  justify-content: space-between !important;
+}
+
+/* Fix flex ordering */
+.nav-stable [class*="flex"] {
+  flex-direction: row !important;
+}
+
+/* Arabic and Hebrew font optimization */
+html[lang="ar"] {
+  font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+}
+
+html[lang="he"] {
+  font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+}
