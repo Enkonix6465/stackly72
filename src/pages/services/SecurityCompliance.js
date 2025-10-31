@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import Logo from '../../components/Logo';
 import UserAvatar from '../../components/UserAvatar';
-import LanguageSelector from '../../components/LanguageSelector';
 import { useTheme } from '../../context/ThemeContext';
+ import LanguageSelector from '../../../src/components/LanguageSelector';
+import { getTranslation } from "../../../src/translations/translations";
+import { useLanguage } from "../../../src/context/LanguageContext";
 
 // Animated Counter Component
 const AnimatedCounter = ({ start = 0, end, duration = 2000, suffix = "", prefix = "" }) => {
@@ -74,7 +75,8 @@ const AnimatedCounter = ({ start = 0, end, duration = 2000, suffix = "", prefix 
 const SecurityCompliance = () => {
   const location = useLocation();
   const { isDarkMode, toggleTheme } = useTheme();
-  const { t } = useTranslation();
+  const { language } = useLanguage();
+    const t = (key) => getTranslation(language, key);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [homeOpen, setHomeOpen] = useState(false);
   const servicesRef = useRef(null);

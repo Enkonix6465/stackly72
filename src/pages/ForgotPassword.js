@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
-import LanguageSelector from '../components/LanguageSelector';
+import LanguageSelector from '../../src/components/LanguageSelector';
+
+import { getTranslation } from "../translations/translations";
+import { useLanguage } from "../context/LanguageContext";
 
 const ForgotPassword = () => {
-  const { t } = useTranslation();
+  const { language } = useLanguage();
+    const t = (key) => getTranslation(language, key);
   const { theme, toggleTheme } = useTheme();
   const [step, setStep] = useState(1); // 1: email, 2: new password
   const [email, setEmail] = useState('');

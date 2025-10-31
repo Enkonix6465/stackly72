@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
-import LanguageSelector from '../components/LanguageSelector';
-
+import { getTranslation } from "../translations/translations";
+import { useLanguage } from "../context/LanguageContext";
+import LanguageSelector from '../../src/components/LanguageSelector';
 const Signup = () => {
-  const { t } = useTranslation();
+  const { language } = useLanguage();
+    const t = (key) => getTranslation(language, key);
   const { theme, toggleTheme } = useTheme();
   const [formData, setFormData] = useState({
     fullName: '',

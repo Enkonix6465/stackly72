@@ -2,14 +2,17 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from '../../components/Logo';
 import UserAvatar from '../../components/UserAvatar';
-import LanguageSelector from '../../components/LanguageSelector';
 import { useTheme } from '../../context/ThemeContext';
-import { useTranslation } from 'react-i18next';
+import LanguageSelector from '../../components/LanguageSelector';
+
+import { getTranslation } from "../../../src/translations/translations";
+import { useLanguage } from "../../../src/context/LanguageContext";
 
 const CaseStudies = () => {
   const location = useLocation();
   const { isDarkMode, toggleTheme } = useTheme();
-  const { t } = useTranslation();
+  const { language } = useLanguage();
+    const t = (key) => getTranslation(language, key)
   const [servicesOpen, setServicesOpen] = useState(false);
   const [homeOpen, setHomeOpen] = useState(false);
   const [counters, setCounters] = useState({

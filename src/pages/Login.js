@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
-import LanguageSelector from '../components/LanguageSelector';
+import LanguageSelector from '../../src/components/LanguageSelector';
+
+import { getTranslation } from "../translations/translations";
+import { useLanguage } from "../context/LanguageContext";
 
 const Login = () => {
-  const { t } = useTranslation();
+  const { language } = useLanguage();
+    const t = (key) => getTranslation(language, key);
   const { isDarkMode, toggleTheme } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

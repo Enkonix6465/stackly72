@@ -2,9 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../components/Logo';
 import UserAvatar from '../components/UserAvatar';
-import LanguageSelector from '../components/LanguageSelector';
 import { useTheme } from '../context/ThemeContext';
-import { useTranslation } from 'react-i18next';
+import LanguageSelector from '../../src/components/LanguageSelector';
+
+import { getTranslation } from "../translations/translations";
+import { useLanguage } from "../context/LanguageContext";
+
 
 // Animated Counter Component
 const AnimatedCounter = ({ start = 0, end, duration = 5000, suffix = "", prefix = "" }) => {
@@ -73,7 +76,8 @@ const AnimatedCounter = ({ start = 0, end, duration = 5000, suffix = "", prefix 
 
 const Home = () => {
   const { isDarkMode, toggleTheme } = useTheme();
-  const { t } = useTranslation();
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(language, key);
 
   // Dropdown states
   const [servicesOpen, setServicesOpen] = useState(false);

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import Home from './pages/Home';
 import Home2 from './pages/Home2';
 import About from './pages/About';
@@ -24,6 +25,7 @@ function App() {
   return (
     <Router>
       <ThemeProvider>
+      <LanguageProvider>
         <AuthProvider>
           <Routes>
           <Route path="/" element={<Home />} />
@@ -46,7 +48,9 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </AuthProvider>
+        </LanguageProvider>
       </ThemeProvider>
+    
     </Router>
   );
 }

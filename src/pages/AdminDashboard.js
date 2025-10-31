@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import { getTranslation } from "../translations/translations";
+import { useLanguage } from "../context/LanguageContext";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -9,7 +10,8 @@ const AdminDashboard = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const { currentUser, logout } = useAuth();
-  const { t, i18n } = useTranslation();
+  const { language } = useLanguage();
+    const t = (key) => getTranslation(language, key);
   const navigate = useNavigate();
 
   const loadUsers = () => {
@@ -53,17 +55,9 @@ const AdminDashboard = () => {
     navigate('/login');
   };
 
-  const changeLanguage = (lang) => {
-    i18n.changeLanguage(lang);
-    localStorage.setItem('selectedLanguage', lang);
-    setShowLanguageDropdown(false);
-  };
+  
 
-  const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-    { code: 'he', name: 'עברית', flag: '🇮🇱' }
-  ];
+  
 
   // Calculate statistics
   const totalStudents = users.filter(u => u.userType === 'user').length;
@@ -635,45 +629,7 @@ const AdminDashboard = () => {
                 {isDarkMode ? 'Light' : 'Dark'}
               </button>
               
-              {/* Language Selector Dropdown */}
-              <div className="relative language-dropdown">
-                <button
-                  onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                  </svg>
-                  {languages.find(lang => lang.code === i18n.language)?.name || 'English'}
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                
-                {showLanguageDropdown && (
-                  <div className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg ${isDarkMode ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'} z-50`}>
-                    {languages.map((lang) => (
-                      <button
-                        key={lang.code}
-                        onClick={() => changeLanguage(lang.code)}
-                        className={`w-full flex items-center justify-between px-4 py-3 text-sm hover:bg-blue-50 dark:hover:bg-gray-700 first:rounded-t-lg last:rounded-b-lg transition ${
-                          i18n.language === lang.code ? 'bg-blue-50 dark:bg-gray-700' : ''
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{lang.flag}</span>
-                          <span className={`font-medium ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{lang.name}</span>
-                        </div>
-                        {i18n.language === lang.code && (
-                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+             
 
               <button
                 onClick={handleLogout}

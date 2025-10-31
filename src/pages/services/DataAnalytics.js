@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import Logo from '../../components/Logo';
 import UserAvatar from '../../components/UserAvatar';
-import LanguageSelector from '../../components/LanguageSelector';
 import { useTheme } from '../../context/ThemeContext';
+ import LanguageSelector from '../../../src/components/LanguageSelector';
+import { getTranslation } from "../../../src/translations/translations";
+import { useLanguage } from "../../../src/context/LanguageContext";
 
 const DataAnalytics = () => {
-  const { t } = useTranslation();
+  const { language } = useLanguage();
+    const t = (key) => getTranslation(language, key);
   const { isDarkMode, toggleTheme } = useTheme();
   const location = useLocation();
 
